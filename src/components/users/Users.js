@@ -5,6 +5,10 @@ import Spinner from "../layout/Spinner";
 import Axios from "axios";
 
 const Users = () => {
+  const {
+    REACT_APP_CLIENT_ID: CLIENT_ID,
+    REACT_APP_SECRET_ID: SECRET_ID
+  } = process.env;
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -14,8 +18,9 @@ const Users = () => {
 
   const getUsers = async () => {
     setLoading(true);
-
-    const githubUsers = await Axios.get("https://api.github.com/users");
+    const githubUsers = await Axios.get(
+      `https://api.github.com/users?client_id=${CLIENT_ID}&client_secret=${SECRET_ID}`
+    );
     const { data } = githubUsers;
 
     setUsers(data);
