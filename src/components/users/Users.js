@@ -13,7 +13,7 @@ const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
-  const [query, setQuery] = useState("d");
+  const [query, setQuery] = useState("a");
   const [alert, setAlert] = useState(null);
 
   useEffect(() => {
