@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import UserItem from "./UserItem";
 import Spinner from "../layout/Spinner";
+import Alert from "../layout/Alert";
 import Axios from "axios";
 
 const Users = () => {
@@ -13,6 +14,7 @@ const Users = () => {
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState("");
   const [query, setQuery] = useState("d");
+  const [alert, setAlert] = useState(null);
 
   useEffect(() => {
     getUsers();
@@ -20,6 +22,7 @@ const Users = () => {
 
   const getUsers = async () => {
     setLoading(true);
+
     const githubUsers = await Axios.get(
       `https://api.github.com/search/users?q=${query}&client_id=${CLIENT_ID}&client_secret=${SECRET_ID}`
     );
@@ -34,10 +37,22 @@ const Users = () => {
     setValue(e.target.value);
   };
 
+  const triggerAlert = (message, type) => {
+    setAlert({
+      message,
+      type
+    });
+    setTimeout(() => setAlert(alert), 2000);
+  };
+
   const onSubmit = e => {
     e.preventDefault();
-    setQuery(value);
-    setValue("");
+    if (value === "") {
+      triggerAlert("Please enter something", "light");
+    } else {
+      setQuery(value);
+      setValue("");
+    }
   };
 
   if (loading) {
@@ -45,6 +60,7 @@ const Users = () => {
   } else {
     return (
       <div>
+        <Alert alert={alert} />
         <form onSubmit={onSubmit} className="form">
           <input
             type="text"
