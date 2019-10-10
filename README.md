@@ -11,9 +11,7 @@ node -v
 node: >= v8.16.1
 ```
 
-```sh
 Clone the Repo [here]("https://github.com/danielotieno/github-finder-app") to your local machine.
-```
 
 ## Installing Dependencies
 
